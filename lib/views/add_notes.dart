@@ -12,16 +12,23 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
+  bool isSubmitting = false;
+
   void addNote() async {
+    if (isSubmitting) return; // Prevent multiple calls
+    isSubmitting = true;
+
     if (titleController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty) {
       if (await ApiService.addNote(
           titleController.text, descriptionController.text)) {
         Navigator.pop(context);
       } else {
-        log("failed adding");
+        log("Failed adding note");
       }
     }
+
+    isSubmitting = false;
   }
 
   @override

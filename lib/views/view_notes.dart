@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:notes/services/api_services.dart';
 import 'package:notes/views/add_notes.dart';
@@ -19,16 +21,18 @@ class _NotesScreenState extends State<NotesScreen> {
 
   void fetchNotes() async {
     notes = await ApiService.getNotes();
+    log('get notes------------------');
     setState(() {});
   }
 
-  void deleteNote(int id) async {
+  void deleteNote(String id) async {
     await ApiService.deleteNote(id);
     fetchNotes();
   }
 
   @override
   Widget build(BuildContext context) {
+    log(notes.toString());
     return Scaffold(
       appBar: AppBar(title: Text("Notes")),
       floatingActionButton: FloatingActionButton(
